@@ -9,6 +9,11 @@ import os from "os";
 import { execSync } from "child_process";
 import { loadConfig, saveConfig, getConfigPath } from "./config";
 
+// Rust sets EVE_RESOURCE_DIR to the project root (dev) or bundled resource dir (prod).
+// process.cwd() is a safe fallback that works during `bun run sidecar` in dev.
+const BASE_DIR: string = process.env.EVE_RESOURCE_DIR ?? process.cwd();
+console.log(`[sidecar] BASE_DIR: ${BASE_DIR}`);
+
 
 // GPU detection
 function detectGPU(): "cuda" | "vulkan" | "cpu" {
@@ -107,7 +112,7 @@ async function runAgent(agentName: string, message: string) {
 async function readInstructions(agentName: string) {
   "use step";
   const instructionsPath = path.join(
-    process.cwd(), "agents", agentName, "agent", "instructions.md"
+    BASE_DIR, "agents", agentName, "agent", "instructions.md"
   );
   console.log("Agent Instruction Path: ", instructionsPath)
   const instructions = await fs.readFile(instructionsPath, "utf-8");

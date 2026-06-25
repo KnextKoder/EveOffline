@@ -24,10 +24,14 @@
   "bundle": {
     "active": true,
     "targets": "all",
+    "externalBin": [
+      "binaries/bun"
+    ],
     "resources": {
       "binaries/win-x64/cpu/*": "win-x64/cpu/",
       "binaries/win-x64/vulkan/*": "win-x64/vulkan/",
-      "binaries/win-x64/cuda/*": "win-x64/cuda/"
+      "binaries/win-x64/cuda/*": "win-x64/cuda/",
+      "../sidecar/**/*": "sidecar/"
     },
     "icon": [
       "icons/32x32.png",
